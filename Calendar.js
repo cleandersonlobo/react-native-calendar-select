@@ -327,7 +327,9 @@ export default class Calendar extends Component {
 								onPress={this.confirm}
 							>
 								{this.props.renderCustomButton ? (
-									this.props.renderCustomButton()
+									this.props.renderCustomButton(
+										this._i18n('save', 'text')
+									)
 								) : (
 									<View style={styles.confirmBtn}>
 										<Text
@@ -351,7 +353,9 @@ export default class Calendar extends Component {
 								]}
 							>
 								{this.props.renderCustomButton ? (
-									this.props.renderCustomButton()
+									this.props.renderCustomButton(
+										this._i18n('save', 'text')
+									)
 								) : (
 									<View style={styles.confirmBtn}>
 										<Text
