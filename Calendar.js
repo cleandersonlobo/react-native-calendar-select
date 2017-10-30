@@ -123,6 +123,7 @@ export default class Calendar extends Component {
 				: '',
 		});
 	}
+	/*
 	_getDateRange() {
 		const {maxDate, minDate, format} = this.props;
 		let max = Moment(maxDate, format);
@@ -140,6 +141,15 @@ export default class Calendar extends Component {
 			min = max.subtract(3, 'months');
 		}
 		if (min.isSameOrAfter(max)) return {};
+		this._minDate = min;
+		this._maxDate = max;
+  }*/
+	_getDateRange() {
+		const {maxDate, minDate, format} = this.props;
+
+		let max = Moment().add(12, 'months');
+		let min = Moment().subtract(12, 'months');
+
 		this._minDate = min;
 		this._maxDate = max;
 	}
