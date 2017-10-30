@@ -21,8 +21,10 @@ const ICON = {
 	close:
 		'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAADGklEQVR4Xu3b3XXTMBTAcV1Leu8I3YAyAWECygSlE9BOQJmAdAK6QWGCphNQNmAE+mzZl6Mc5xzXtiLJ1r0STfLqJM3/Z9muPwTiwF9w4P3iCHAcAQ4BRDxt2/aDEOKkqqqfAPD0P2EZYy6EEJ/sbwaATVVVtwDwd9gwuQkYY+wHv9n43QcQca21vi4dARFPmqa5F0Ks+r8VEZ+UUu+HCCMAu+abpvnVj+990Z1S6rJUBBtvjHkAgLOp34iIX7XWN/1lI4Cmaa4Q0a5916tIBF+8jUHER631i5ExAqjr+gYAvnjWclEIIfHBAIh41m0CvpFeBEJofBdzqZS627sJ2IV1Xa8B4LNPQAiRFSEmfmr4b48QrkhjjJWyhxLfKwtCZPxvpdQq+DC4Ky4VIVX83hFQKkLK+CAA+6ZSRkLq+GCAEhAo4qMAciJQxUcD5ECgjJ8FwIlAHT8bgAOBI34RACUCV/xiAAoEzvgkACkRuOOTAaRAyBGfFGAJQq745ABzEHLGkwDEItgLMK5reP3zcER0ntL6ztf3LSe7MRJxAuX9/VTxZCNgxqm0E4EynhwgcnMYIVDHswDMReCIZwOIReCKZwOIOdR12wHbhVayo8Bug54Rv/soCwIpwIJ4NgQygATxLAgkAAnjyRGSA8TE27199+BFtjtQSQFi43e3qyL+bU6+Y0wGMDd+xr/NSRGSACyNz4mwGCBVfC6ERQCp43MgzAagiudGmAVAHc+JEA3AFc+FEAXAHc+BEAyQK54aIQggdzwlgheglHgqhL0ApcVTIDgBSo1PjTAJUHp8SgTXfIGH4fP2U3cuOK/euu6chJ5KI+Kt1vpq+D0jgG6yxHfnrZpuQQnxsSNBSvl2OPNl6nH5DQC82wdQUnwMAgBcSynX/bZogBLjIxA+KqV++ACcEyZKjg9AeJZSnobMGbLzbuxm8KYvZZ+3V0qdTz1y7ttfcC+fmO/wjIjnWuuNdydo39AdBu0eczu/BgDsdbgXMy24o2L/nn3wom3bFSL+kVLaFTqaMrdti/3i1/b+I8BrW6OxPQc/Av4BDSZYbnPWwJkAAAAASUVORK5CYII=',
 };
+
 export default class Calendar extends Component {
 	static propTypes = {
+		renderCustomButton: PropTypes.func,
 		i18n: PropTypes.string,
 		format: PropTypes.string,
 		customI18n: PropTypes.object,
@@ -43,18 +45,6 @@ export default class Calendar extends Component {
 		color: {},
 	};
 	static I18N_MAP = {
-		zh: {
-			w: ['', '一', '二', '三', '四', '五', '六', '日'],
-			weekday: ['', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'],
-			text: {
-				start: '开 始',
-				end: '结 束',
-				date: '日 期',
-				save: '保 存',
-				clear: '清除',
-			},
-			date: 'M月D日',
-		},
 		en: {
 			w: ['', 'Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'],
 			weekday: [
@@ -75,18 +65,6 @@ export default class Calendar extends Component {
 				clear: 'Reset',
 			},
 			date: 'DD / MM',
-		},
-		jp: {
-			w: ['', '月', '火', '水', '木', '金', '土', '日'],
-			weekday: ['', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日', '日曜日'],
-			text: {
-				start: 'スタート',
-				end: 'エンド',
-				date: '時　間',
-				save: '確　認',
-				clear: 'クリア',
-			},
-			date: 'M月D日',
 		},
 	};
 	constructor(props) {
@@ -235,7 +213,7 @@ export default class Calendar extends Component {
 			endWeekdayText,
 		} = this.state;
 		const {
-			mainColor = '#15aaaa',
+			mainColor = '#0a0d17',
 			subColor = '#fff',
 			borderColor = 'rgba(255, 255, 255, 0.50)',
 		} = this.props.color;
@@ -348,18 +326,22 @@ export default class Calendar extends Component {
 								style={styles.confirmContainer}
 								onPress={this.confirm}
 							>
-								<View style={styles.confirmBtn}>
-									<Text
-										ellipsisMode="tail"
-										numberOfLines={1}
-										style={[
-											styles.confirmText,
-											subFontColor,
-										]}
-									>
-										{this._i18n('save', 'text')}
-									</Text>
-								</View>
+								{this.props.renderCustomButton ? (
+									this.props.renderCustomButton()
+								) : (
+									<View style={styles.confirmBtn}>
+										<Text
+											ellipsisMode="tail"
+											numberOfLines={1}
+											style={[
+												styles.confirmText,
+												styles.confirmTextDisabled,
+											]}
+										>
+											{this._i18n('save', 'text')}
+										</Text>
+									</View>
+								)}
 							</TouchableHighlight>
 						) : (
 							<View
@@ -368,18 +350,22 @@ export default class Calendar extends Component {
 									styles.confirmContainerDisabled,
 								]}
 							>
-								<View style={styles.confirmBtn}>
-									<Text
-										ellipsisMode="tail"
-										numberOfLines={1}
-										style={[
-											styles.confirmText,
-											styles.confirmTextDisabled,
-										]}
-									>
-										{this._i18n('save', 'text')}
-									</Text>
-								</View>
+								{this.props.renderCustomButton ? (
+									this.props.renderCustomButton()
+								) : (
+									<View style={styles.confirmBtn}>
+										<Text
+											ellipsisMode="tail"
+											numberOfLines={1}
+											style={[
+												styles.confirmText,
+												styles.confirmTextDisabled,
+											]}
+										>
+											{this._i18n('save', 'text')}
+										</Text>
+									</View>
+								)}
 							</View>
 						)}
 					</View>
