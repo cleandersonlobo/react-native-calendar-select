@@ -66,6 +66,27 @@ export default class Calendar extends Component {
 			},
 			date: 'DD / MM',
 		},
+		ptBR:{
+			w: ['', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
+			weekday: [
+				'',
+				'Segunda',
+				'Terça',
+				'Quarta',
+				'Quinta',
+				'Sexta',
+				'Sábado',
+				'Dkonigo',
+			],
+			text: {
+				start: 'Inicio',
+				end: 'Fim',
+				date: 'Data',
+				save: 'Salvar',
+				clear: 'Limpar',
+			},
+			date: 'DD / MM',
+		}
 	};
 	constructor(props) {
 		super(props);
