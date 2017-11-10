@@ -59,6 +59,20 @@ export default class Month extends Component {
 			'November',
 			'December',
 		],
+		ptBR: [
+			'Janeiro',
+			'Fevereiro',
+			'Março',
+			'Abril',
+			'Maio',
+			'Junho',
+			'Julho',
+			'Agosto',
+			'Setembro',
+			'Outubro',
+			'Novembro',
+			'Dezembro',
+		],
 	};
 	_getMonthText() {
 		const {month, today, i18n} = this.props;
