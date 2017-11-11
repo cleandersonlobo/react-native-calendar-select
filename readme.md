@@ -109,7 +109,7 @@ render() {
 
 | Property | Type | Default | Description |
 | --- | --- | --- | --- |
-| i18n | String | 'en' | Language of the component, supports `en` / `zh` / `jp`. |
+| i18n | String | 'en' | Language of the component, supports `en` / `zh` / `jp` / `ptBR`.. |
 | customI18n | Object | {} | Customize text of the component, the structure of this object is shown in the example above. |
 | color | Object | {} | Customize color. |
 | format | string | 'YYYY-MM-DD' | Define date format, you can also pass Date Object or Moment Object as props. |
